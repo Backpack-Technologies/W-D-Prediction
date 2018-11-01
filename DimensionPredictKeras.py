@@ -15,35 +15,35 @@ def neural_model():
 
     # Input Layer
     # model.add(keras.layers.Dense(128, kernel_initializer='orthogonal', input_dim=NUM_OF_COLS, activation="relu",
-    #                              kernel_regularizer=keras.regularizers.l1(0.01),
-    #                              bias_regularizer=keras.regularizers.l1(0.01)))
+    #                              kernel_regularizer=keras.regularizers.l2(0.01),
+    #                              bias_regularizer=keras.regularizers.l2(0.01)))
     model.add(keras.layers.Dropout(0.2, input_shape=(NUM_OF_COLS, )))
 
     # Hidden Layer
-    model.add(keras.layers.Dense(2560, kernel_initializer='orthogonal', activation='relu',
-                                 kernel_regularizer=keras.regularizers.l1(0.01),
-                                 bias_regularizer=keras.regularizers.l1(0.01)))
+    model.add(keras.layers.Dense(2560, kernel_initializer='normal', activation='relu',
+                                 kernel_regularizer=keras.regularizers.l2(0.01),
+                                 bias_regularizer=keras.regularizers.l2(0.01)))
     model.add(keras.layers.Dropout(0.5))
 
-    model.add(keras.layers.Dense(2560, kernel_initializer='orthogonal', activation='relu',
-                                 kernel_regularizer=keras.regularizers.l1(0.01),
-                                 bias_regularizer=keras.regularizers.l1(0.01)))
+    model.add(keras.layers.Dense(2560, kernel_initializer='normal', activation='relu',
+                                 kernel_regularizer=keras.regularizers.l2(0.01),
+                                 bias_regularizer=keras.regularizers.l2(0.01)))
     model.add(keras.layers.Dropout(0.5))
 
-    model.add(keras.layers.Dense(2560, kernel_initializer='orthogonal', activation='relu',
-                                 kernel_regularizer=keras.regularizers.l1(0.01),
-                                 bias_regularizer=keras.regularizers.l1(0.01)))
+    model.add(keras.layers.Dense(2560, kernel_initializer='normal', activation='relu',
+                                 kernel_regularizer=keras.regularizers.l2(0.01),
+                                 bias_regularizer=keras.regularizers.l2(0.01)))
     model.add(keras.layers.Dropout(0.5))
 
-    model.add(keras.layers.Dense(2560, kernel_initializer='orthogonal', activation='relu',
-                                 kernel_regularizer=keras.regularizers.l1(0.01),
-                                 bias_regularizer=keras.regularizers.l1(0.01)))
+    model.add(keras.layers.Dense(2560, kernel_initializer='normal', activation='relu',
+                                 kernel_regularizer=keras.regularizers.l2(0.01),
+                                 bias_regularizer=keras.regularizers.l2(0.01)))
     model.add(keras.layers.Dropout(0.5))
 
     # Output Layer
-    model.add(keras.layers.Dense(4, kernel_initializer='orthogonal', activation='linear',
-                                 kernel_regularizer=keras.regularizers.l1(0.01),
-                                 bias_regularizer=keras.regularizers.l1(0.01)))
+    model.add(keras.layers.Dense(4, kernel_initializer='normal', activation='relu',
+                                 kernel_regularizer=keras.regularizers.l2(0.01),
+                                 bias_regularizer=keras.regularizers.l2(0.01)))
 
     model.compile(loss='mean_absolute_error', optimizer='adam', metrics=['mean_absolute_error'])
 
@@ -85,7 +85,7 @@ def main(_):
     callbacks_list = [checkpoint]
 
     model = neural_model()
-    model.fit(x_train, y_train, epochs=EPCHOES, batch_size=32, validation_split=0.1)
+    model.fit(x_train, y_train, epochs=EPCHOES, batch_size=444, validation_split=0.2)
 
     _start_shell(locals())
 
