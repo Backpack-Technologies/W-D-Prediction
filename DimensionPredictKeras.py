@@ -14,16 +14,16 @@ def neural_model():
     model = keras.Sequential()
 
     # Input Layer
-    model.add(keras.layers.Dense(128, kernel_initializer='orthogonal', input_dim=NUM_OF_COLS, activation="relu",
+    model.add(keras.layers.Dense(264, kernel_initializer='normal', input_dim=NUM_OF_COLS, activation="relu",
                                  kernel_regularizer=keras.regularizers.l2(0.01),
                                  bias_regularizer=keras.regularizers.l2(0.01)))
     # model.add(keras.layers.Dropout(0.2, input_shape=(NUM_OF_COLS, )))
 
     # Hidden Layer
-    model.add(keras.layers.Dense(64, kernel_initializer='normal', activation='relu',
+    model.add(keras.layers.Dense(264, kernel_initializer='normal', activation='relu',
                                  kernel_regularizer=keras.regularizers.l2(0.01),
                                  bias_regularizer=keras.regularizers.l2(0.01)))
-    model.add(keras.layers.Dropout(0.5))
+    # model.add(keras.layers.Dropout(0.5))
 
     # model.add(keras.layers.Dense(2560, kernel_initializer='normal', activation='relu',
     #                              kernel_regularizer=keras.regularizers.l2(0.01),
