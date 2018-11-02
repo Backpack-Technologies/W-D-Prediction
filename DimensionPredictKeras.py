@@ -4,7 +4,7 @@ import DataParser
 import ProductInfo
 import numpy as np
 
-EPCHOES = 16
+EPCHOES = 777
 NUM_OF_COLS = 100
 MODEL_FILE_NAME = '/Users/dipta007/my-world/backpack/work/DimensionPredict/model/test4/'
 LOAD_DATA_FROM_FILE = False
@@ -14,31 +14,31 @@ def neural_model():
     model = keras.Sequential()
 
     # Input Layer
-    # model.add(keras.layers.Dense(128, kernel_initializer='orthogonal', input_dim=NUM_OF_COLS, activation="relu",
-    #                              kernel_regularizer=keras.regularizers.l2(0.01),
-    #                              bias_regularizer=keras.regularizers.l2(0.01)))
-    model.add(keras.layers.Dropout(0.2, input_shape=(NUM_OF_COLS, )))
+    model.add(keras.layers.Dense(128, kernel_initializer='orthogonal', input_dim=NUM_OF_COLS, activation="relu",
+                                 kernel_regularizer=keras.regularizers.l2(0.01),
+                                 bias_regularizer=keras.regularizers.l2(0.01)))
+    # model.add(keras.layers.Dropout(0.2, input_shape=(NUM_OF_COLS, )))
 
     # Hidden Layer
-    model.add(keras.layers.Dense(2560, kernel_initializer='normal', activation='relu',
+    model.add(keras.layers.Dense(64, kernel_initializer='normal', activation='relu',
                                  kernel_regularizer=keras.regularizers.l2(0.01),
                                  bias_regularizer=keras.regularizers.l2(0.01)))
     model.add(keras.layers.Dropout(0.5))
 
-    model.add(keras.layers.Dense(2560, kernel_initializer='normal', activation='relu',
-                                 kernel_regularizer=keras.regularizers.l2(0.01),
-                                 bias_regularizer=keras.regularizers.l2(0.01)))
-    model.add(keras.layers.Dropout(0.5))
-
-    model.add(keras.layers.Dense(2560, kernel_initializer='normal', activation='relu',
-                                 kernel_regularizer=keras.regularizers.l2(0.01),
-                                 bias_regularizer=keras.regularizers.l2(0.01)))
-    model.add(keras.layers.Dropout(0.5))
-
-    model.add(keras.layers.Dense(2560, kernel_initializer='normal', activation='relu',
-                                 kernel_regularizer=keras.regularizers.l2(0.01),
-                                 bias_regularizer=keras.regularizers.l2(0.01)))
-    model.add(keras.layers.Dropout(0.5))
+    # model.add(keras.layers.Dense(2560, kernel_initializer='normal', activation='relu',
+    #                              kernel_regularizer=keras.regularizers.l2(0.01),
+    #                              bias_regularizer=keras.regularizers.l2(0.01)))
+    # model.add(keras.layers.Dropout(0.5))
+    #
+    # model.add(keras.layers.Dense(2560, kernel_initializer='normal', activation='relu',
+    #                              kernel_regularizer=keras.regularizers.l2(0.01),
+    #                              bias_regularizer=keras.regularizers.l2(0.01)))
+    # model.add(keras.layers.Dropout(0.5))
+    #
+    # model.add(keras.layers.Dense(2560, kernel_initializer='normal', activation='relu',
+    #                              kernel_regularizer=keras.regularizers.l2(0.01),
+    #                              bias_regularizer=keras.regularizers.l2(0.01)))
+    # model.add(keras.layers.Dropout(0.5))
 
     # Output Layer
     model.add(keras.layers.Dense(4, kernel_initializer='normal', activation='relu',
