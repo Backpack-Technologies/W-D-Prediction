@@ -4,7 +4,7 @@ import DataParser
 import ProductInfo
 import numpy as np
 
-EPCHOES = 777
+EPCHOES = 400
 NUM_OF_COLS = 100
 MODEL_FILE_NAME = '/Users/dipta007/my-world/backpack/work/DimensionPredict/model/test4/'
 LOAD_DATA_FROM_FILE = False
@@ -39,11 +39,10 @@ def neural_model():
     # model.add(keras.layers.Dropout(0.5))
 
     # Output Layer
-    model.add(keras.layers.Dense(4, kernel_initializer='normal', activation='relu',
-                                 kernel_regularizer=keras.regularizers.l2(0.01),
-                                 bias_regularizer=keras.regularizers.l2(0.01)))
+    model.add(keras.layers.Dense(4, kernel_initializer='normal', activation='relu'))
 
-    model.compile(loss='mean_absolute_error', optimizer='adam', metrics=['mean_absolute_error'])
+    optimizer = keras.optimizers.SGD(lr=0.01, clipvalue=0.5)
+    model.compile(loss='mean_absolute_error', optimizer="RMSprop", metrics=['mean_absolute_error'])
 
     return model
 
