@@ -4,10 +4,10 @@ import DataParser
 import ProductInfo
 import numpy as np
 
-EPCHOES = 100
+EPCHOES = 444
 NUM_OF_COLS = 300
-MODEL_FILE_NAME = '/Users/dipta007/my-world/backpack/work/DimensionPredict/model/test4/'
-EMBEDDINGS_FILE = 'data/p2v-embeddings400000'
+MODEL_FILE_NAME = '/Users/dipta007/my-world/backpack/work/DimensionPredict/model/test1/'
+EMBEDDINGS_FILE = 'data/p2v-embeddings1000000'
 LOAD_DATA_FROM_FILE = False
 
 
@@ -15,17 +15,17 @@ def neural_model():
     model = keras.Sequential()
 
     # Input Layer
-    model.add(keras.layers.Dense(164, kernel_initializer='normal', input_dim=NUM_OF_COLS, activation="relu",
+    model.add(keras.layers.Dense(405, kernel_initializer='normal', input_dim=NUM_OF_COLS, activation="relu",
                                  kernel_regularizer=keras.regularizers.l2(0.01),
                                  bias_regularizer=keras.regularizers.l2(0.01)))
     # model.add(keras.layers.Dropout(0.2, input_shape=(NUM_OF_COLS, )))
 
     # Hidden Layer
-    model.add(keras.layers.Dense(164, kernel_initializer='normal', activation='relu'))
+    model.add(keras.layers.Dense(405, kernel_initializer='normal', activation='relu'))
     model.add(keras.layers.Dropout(0.5))
 
-    model.add(keras.layers.Dense(164, kernel_initializer='normal', activation='relu'))
-    model.add(keras.layers.Dropout(0.5))
+    # model.add(keras.layers.Dense(164, kernel_initializer='normal', activation='relu'))
+    # model.add(keras.layers.Dropout(0.5))
 
     # model.add(keras.layers.Dense(2560, kernel_initializer='normal', activation='relu',
     #                              kernel_regularizer=keras.regularizers.l2(0.01),

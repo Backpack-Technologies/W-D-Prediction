@@ -4,15 +4,16 @@ import json
 from sklearn.model_selection import train_test_split
 
 
-DATA_FILE = "data/p2v-embeddings400000"
+DATA_FILE = "data/p2v-embeddings1000000"
 DIMENSION_FILE = "data/asin+dimensions.txt"
-PARSED_DATA = 'data/dataset'
+PARSED_DATA = 'data/dataset1000000'
 
 dimensions = dict()
 NUM_OF_COLS = 300
 
 
 def get_data(cat1, cat2, cat3, cat4):
+    loop = 0
     with open(DIMENSION_FILE) as infile:
         for line in infile:
             now = json.loads(line)
@@ -20,6 +21,10 @@ def get_data(cat1, cat2, cat3, cat4):
             if cat1 not in dimension or cat2 not in dimension or cat3 not in dimension or cat4 not in dimension:
                 continue
             dimensions[now['asin']] = now['dimensions']
+
+            loop += 1
+            if loop % 10000 == 0:
+                print("created mapping", loop)
 
     with open(DATA_FILE, "r") as infile:
         lineNo = 0
