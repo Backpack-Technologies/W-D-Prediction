@@ -8,7 +8,7 @@ EPCHOES = 444
 NUM_OF_COLS = 300
 MODEL_FILE_NAME = '/Users/dipta007/my-world/backpack/work/DimensionPredict/model/test1/'
 EMBEDDINGS_FILE = 'data/p2v-embeddings1000000'
-LOAD_DATA_FROM_FILE = False
+LOAD_DATA_FROM_FILE = True
 
 
 def neural_model():

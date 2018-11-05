@@ -55,8 +55,12 @@ def get_data(file_load):
 
     with open(DUMPED_DATA_FILE, 'r') as infile:
         res = []
+        loop = 0
         for line in infile:
             res.append(json.loads(line))
+            loop += 1
+            if loop%1000 == 0:
+                print("got search ", loop)
 
         print(len(res))
 
@@ -71,6 +75,9 @@ def get_data(file_load):
                 count[asin] += 1
 
             datas.append(tmpData)
+
+            if len(datas) % 1000:
+                print("data collected", len(datas))
 
         count_sorted = OrderedDict(sorted(count.items(), key=itemgetter(1), reverse=True))
         count_final = dict()
@@ -92,6 +99,9 @@ def get_data(file_load):
                 if asin in count_final:
                     tmp.append(asin)
             datas.append(tmp)
+
+            if len(datas) % 1000:
+                print("final data collected", len(datas))
         del tmpData
 
         # print(datas)
