@@ -4,11 +4,12 @@ import json
 from sklearn.model_selection import train_test_split
 
 
-DATA_FILE = "data/resD.vec"
-DIMENSION_FILE = "data/djdataF.txt"
-PARSED_DATA = 'data/dataF'
+DATA_FILE = "data/p2v-embeddings400000"
+DIMENSION_FILE = "data/asin+dimensions.txt"
+PARSED_DATA = 'data/dataset'
 
 dimensions = dict()
+NUM_OF_COLS = 300
 
 
 def get_data(cat1, cat2, cat3, cat4):
@@ -25,7 +26,7 @@ def get_data(cat1, cat2, cat3, cat4):
         datas = []
         for line in infile:
             lineNo += 1
-            if lineNo > 2:
+            if lineNo > 1:
                 row = line.split()
 
                 asin = row[0]
@@ -52,10 +53,10 @@ def get_splitted_data_for_model(load_data):
         np.save(PARSED_DATA, datas)
 
     datas = np.load(PARSED_DATA + ".npy")
-    X = datas[:, 0:100]
-    y = datas[:, 100:104]
+    X = datas[:, 0:NUM_OF_COLS]
+    y = datas[:, NUM_OF_COLS:NUM_OF_COLS+4]
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     return X_train, X_test, y_train, y_test
 
 

@@ -4,9 +4,10 @@ import DataParser
 import ProductInfo
 import numpy as np
 
-EPCHOES = 400
-NUM_OF_COLS = 100
+EPCHOES = 100
+NUM_OF_COLS = 300
 MODEL_FILE_NAME = '/Users/dipta007/my-world/backpack/work/DimensionPredict/model/test4/'
+EMBEDDINGS_FILE = 'data/p2v-embeddings400000'
 LOAD_DATA_FROM_FILE = False
 
 
@@ -14,13 +15,16 @@ def neural_model():
     model = keras.Sequential()
 
     # Input Layer
-    model.add(keras.layers.Dense(264, kernel_initializer='normal', input_dim=NUM_OF_COLS, activation="relu",
+    model.add(keras.layers.Dense(164, kernel_initializer='normal', input_dim=NUM_OF_COLS, activation="relu",
                                  kernel_regularizer=keras.regularizers.l2(0.01),
                                  bias_regularizer=keras.regularizers.l2(0.01)))
     # model.add(keras.layers.Dropout(0.2, input_shape=(NUM_OF_COLS, )))
 
     # Hidden Layer
-    model.add(keras.layers.Dense(264, kernel_initializer='normal', activation='relu'))
+    model.add(keras.layers.Dense(164, kernel_initializer='normal', activation='relu'))
+    model.add(keras.layers.Dropout(0.5))
+
+    model.add(keras.layers.Dense(164, kernel_initializer='normal', activation='relu'))
     model.add(keras.layers.Dropout(0.5))
 
     # model.add(keras.layers.Dense(2560, kernel_initializer='normal', activation='relu',
@@ -58,7 +62,7 @@ def _start_shell(local_ns=None):
 
 
 def predict(ind):
-    with open('data/resD.vec', "r") as infile:
+    with open(EMBEDDINGS_FILE, "r") as infile:
         line = ""
         while ind:
             line = infile.readline()
@@ -67,11 +71,11 @@ def predict(ind):
         print(ProductInfo.get("dimensions", row[0]))
         del row[0]
         npRow = np.asarray(np.float_(row))
-        return npRow.reshape(1, 100)
+        return npRow.reshape(1, NUM_OF_COLS)
 
 
 def main(_):
-    x_train, y_train = DataParser.get_data_for_model(LOAD_DATA_FROM_FILE)
+    x_train, x_test, y_train, y_test = DataParser.get_splitted_data_for_model(LOAD_DATA_FROM_FILE)
 
     print(x_train.shape, y_train.shape)
 
@@ -83,6 +87,7 @@ def main(_):
 
     model = neural_model()
     model.fit(x_train, y_train, epochs=EPCHOES, batch_size=444, validation_split=0.2)
+    print(model.evaluate(x_test, y_test, batch_size=44))
 
     _start_shell(locals())
 

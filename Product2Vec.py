@@ -16,9 +16,9 @@ def read_input(input_file):
         for i, line in enumerate(f):
 
             if i % 10000 == 0:
-                logging.info("read {0} reviews".format(i))
+                logging.info("read {0} Products".format(i))
             # do some pre-processing and return a list of words for each review text
-            yield gensim.utils.simple_preprocess(line)
+            yield line.split()
 
 
 def _start_shell(local_ns=None):
@@ -35,11 +35,11 @@ def main():
     documents = list(read_input(data_file))
     logging.info("Done reading data file")
 
-    model = gensim.models.Word2Vec(documents, size=150, window=20, min_count=0, workers=10, sg=1, hs=1, alpha=0.016,
-                                   min_alpha=0.0001)
-    model.train(documents, total_examples=len(documents), epochs=16)
+    model = gensim.models.Word2Vec(documents, size=300, window=20, min_count=0, workers=12, sg=1, hs=1, alpha=0.016,
+                                   min_alpha=0.00001)
+    model.train(documents, total_examples=len(documents), epochs=44)
 
-    model.wv.save_word2vec_format('p2v-embeddings', binary=False)
+    model.wv.save_word2vec_format('data/p2v-embeddingsF', binary=False)
 
     _start_shell(locals())
 
