@@ -5,7 +5,7 @@ from operator import itemgetter
 import json
 import random
 
-TOP = 400000
+TOP = 1000000
 
 DUMPED_DATA_FILE = "data/search-query.json"
 NUMBER_OF_DATAS = str(TOP)
@@ -72,7 +72,7 @@ def get_data(file_load):
 
             datas.append(tmpData)
 
-        count_sorted = OrderedDict(sorted(count.items(), key = itemgetter(1), reverse = True))
+        count_sorted = OrderedDict(sorted(count.items(), key=itemgetter(1), reverse=True))
         count_final = dict()
 
         for ind, asin in enumerate(count_sorted):
