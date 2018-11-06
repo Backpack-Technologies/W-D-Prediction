@@ -76,7 +76,7 @@ def get_data(file_load):
 
             datas.append(tmpData)
 
-            if len(datas) % 1000:
+            if len(datas) % 1000 == 0:
                 print("data collected", len(datas))
 
         count_sorted = OrderedDict(sorted(count.items(), key=itemgetter(1), reverse=True))
