@@ -31,6 +31,10 @@ def get_data(cat1, cat2, cat3, cat4):
         datas = []
         for line in infile:
             lineNo += 1
+
+            if lineNo % 1000 == 0:
+                print(lineNo)
+
             if lineNo > 1:
                 row = line.split()
 
@@ -47,8 +51,6 @@ def get_data(cat1, cat2, cat3, cat4):
 
                 datas.append(row)
 
-            if lineNo % 1000 == 0:
-                print(lineNo)
         return datas
 
 
