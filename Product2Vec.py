@@ -41,7 +41,7 @@ def main():
 
     model = gensim.models.Word2Vec(documents, size=300, window=20, min_count=0, workers=12, sg=1, hs=1, alpha=0.016,
                                    min_alpha=0.00001)
-    model.train(documents, total_examples=len(documents), epochs=44)
+    model.train(documents, total_examples=len(documents), epochs=16)
 
     model.wv.save_word2vec_format(EMBEDDINGS_FILE, binary=False)
     model.accuracy(QUESTION_FILE)
