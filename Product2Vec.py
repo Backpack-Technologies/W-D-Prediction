@@ -7,7 +7,7 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 TOP = 1000000
 NUMBER_OF_DATAS = str(TOP)
 data_file = "data/p2v-data" + NUMBER_OF_DATAS
-EMBEDDINGS_FILE = "data/p2v-embeddings1." + NUMBER_OF_DATAS
+EMBEDDINGS_FILE = "data/p2v-embeddings" + NUMBER_OF_DATAS
 QUESTION_FILE = "data/p2v-question" + NUMBER_OF_DATAS
 
 

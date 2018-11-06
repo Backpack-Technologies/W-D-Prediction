@@ -93,6 +93,7 @@ def get_data(file_load):
         tmpData = datas.copy()
         datas.clear()
 
+        loop = 0
         for data in tmpData:
             tmp = []
             for asin in data:
@@ -100,14 +101,16 @@ def get_data(file_load):
                     tmp.append(asin)
             datas.append(tmp)
 
-            if len(datas) % 1000:
-                print("final data collected", len(datas))
+            loop += 1
+            if loop % 1000 == 0:
+                print("final data collected", loop, "in", len(tmpData))
         del tmpData
 
         # print(datas)
         # print(count_final)
         print(len(count_final))
 
+        loop = 0
         with open(P2V_DATA_FILE, "w") as fp:
             with open(P2V_QUE_FILE, "w") as qp:
                 for data in datas:
@@ -118,6 +121,9 @@ def get_data(file_load):
                             qp.write(" ".join(data[0:4]))
                             qp.write("\n")
 
+                    loop += 1
+                    if loop % 1000 == 0:
+                        print("file written", loop, "in", len(datas))
 
 if __name__ == '__main__':
     get_data(False)
