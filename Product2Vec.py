@@ -5,10 +5,26 @@ import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 TOP = 1000000
+INTERACTIVE_SHELL = False
 NUMBER_OF_DATAS = str(TOP)
-data_file = "data/p2v-data" + NUMBER_OF_DATAS
-EMBEDDINGS_FILE = "data/p2v-embeddings" + NUMBER_OF_DATAS
+DATA_FILE = "data/p2v-data" + NUMBER_OF_DATAS
 QUESTION_FILE = "data/p2v-question" + NUMBER_OF_DATAS
+EMBEDDINGS_FILE = "data/p2v-embeddings" + NUMBER_OF_DATAS
+
+EMBEDDING_SIZE = 300
+EPOCH = 16
+
+
+def init_file_name():
+    global NUMBER_OF_DATAS
+    global DATA_FILE
+    global QUESTION_FILE
+    global EMBEDDINGS_FILE
+
+    NUMBER_OF_DATAS = str(TOP)
+    DATA_FILE = "data/p2v-data" + NUMBER_OF_DATAS
+    QUESTION_FILE = "data/p2v-question" + NUMBER_OF_DATAS
+    EMBEDDINGS_FILE = "data/p2v-embeddings" + NUMBER_OF_DATAS
 
 
 def read_input(input_file):
@@ -36,18 +52,22 @@ def _start_shell(local_ns=None):
 
 
 def main():
-    documents = list(read_input(data_file))
+    init_file_name()
+
+    documents = list(read_input(DATA_FILE))
     logging.info("Done reading data file")
 
-    model = gensim.models.Word2Vec(documents, size=300, window=20, min_count=0, workers=12, sg=1, hs=1, alpha=0.016,
-                                   min_alpha=0.00001)
-    model.train(documents, total_examples=len(documents), epochs=16)
+    model = gensim.models.Word2Vec(documents, size=EMBEDDING_SIZE, window=20, min_count=0, workers=20, sg=1, hs=1,
+                                   alpha=0.016, min_alpha=0.00001)
+    model.train(documents, total_examples=len(documents), epochs=EPOCH)
 
     model.wv.save_word2vec_format(EMBEDDINGS_FILE, binary=False)
     model.accuracy(QUESTION_FILE)
 
-    _start_shell(locals())
+    if INTERACTIVE_SHELL:
+        _start_shell(locals())
 
 
 if __name__ == "__main__":
+    INTERACTIVE_SHELL = True
     main()

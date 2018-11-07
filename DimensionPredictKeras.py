@@ -4,31 +4,41 @@ import DataParser
 import ProductInfo
 import numpy as np
 
+INTERACTIVE_SHELL = False
+TOP = 1000000
 EPCHOES = 4
 NUM_OF_COLS = 300
-MODEL_FILE_NAME = './modelDP/Weights-best1.h5'
-EMBEDDINGS_FILE = 'data/p2v-embeddings1000000'
+MODEL_FILE_NAME = './model/Weights-best' + str(TOP) + ".h5"
+EMBEDDINGS_FILE = 'data/p2v-embeddings' + str(TOP)
 LOAD_DATA_FROM_FILE = True
+
+
+def init_file_name():
+    global EMBEDDINGS_FILE
+    global MODEL_FILE_NAME
+
+    MODEL_FILE_NAME = './model/Weights-best' + str(TOP) + ".h5"
+    EMBEDDINGS_FILE = 'data/p2v-embeddings' + str(TOP)
 
 
 def create_neural_model():
     model = keras.Sequential()
 
-    activation_fucntion = keras.layers.PReLU();
+    activation_function = keras.layers.PReLU();
 
     # Input Layer
     model.add(keras.layers.Dense(405, kernel_initializer='normal', input_dim=NUM_OF_COLS,
                                  kernel_regularizer=keras.regularizers.l2(0.01),
                                  bias_regularizer=keras.regularizers.l2(0.01), name="input"))
-    model.add(activation_fucntion)
+    model.add(activation_function)
 
     # Hidden Layer
     model.add(keras.layers.Dense(405, kernel_initializer='normal', name="hidden1"))
-    model.add(activation_fucntion)
+    model.add(activation_function)
     model.add(keras.layers.Dropout(0.2))
 
     model.add(keras.layers.Dense(405, kernel_initializer='normal', name="hidden2"))
-    model.add(activation_fucntion)
+    model.add(activation_function)
     model.add(keras.layers.Dropout(0.2))
 
     # Output Layer
@@ -39,6 +49,7 @@ def create_neural_model():
 
 
 def train_neural_model(model):
+    DataParser.TOP = TOP
     x_train, x_test, y_train, y_test = DataParser.get_splitted_data_for_model(LOAD_DATA_FROM_FILE)
 
     print(x_train.shape, y_train.shape)
@@ -86,11 +97,14 @@ def predict(ind):
 
 
 def main(_):
+    init_file_name()
     model = create_neural_model()
     train_neural_model(model)
 
-    _start_shell(locals())
+    if INTERACTIVE_SHELL:
+        _start_shell(locals())
 
 
 if __name__ == "__main__":
+    INTERACTIVE_SHELL = True
     tf.app.run()

@@ -108,6 +108,7 @@ venv.bak/
 venv/
 model/
 data/
+data1/
 modelDP/
 logs/
 .idea/

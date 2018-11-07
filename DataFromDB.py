@@ -5,17 +5,28 @@ from operator import itemgetter
 import json
 import random
 
-TOP = 1000000
-
-DUMPED_DATA_FILE = "data/search-query.json"
+TOP = 2000000
 NUMBER_OF_DATAS = str(TOP)
 P2V_DATA_FILE = "data/p2v-data" + NUMBER_OF_DATAS
 P2V_QUE_FILE = "data/p2v-question" + NUMBER_OF_DATAS
 
+DUMPED_DATA_FILE = "data/search-query.json"
 datas = []
 
 
+def init_file_name():
+    global NUMBER_OF_DATAS
+    global P2V_DATA_FILE
+    global P2V_QUE_FILE
+
+    NUMBER_OF_DATAS = str(TOP)
+    P2V_DATA_FILE = "data/p2v-data" + NUMBER_OF_DATAS
+    P2V_QUE_FILE = "data/p2v-question" + NUMBER_OF_DATAS
+
+
 def get_data(file_load):
+    init_file_name()
+
     count = dict()
     if file_load:
         with open(DUMPED_DATA_FILE, 'a') as outfile:
@@ -59,10 +70,9 @@ def get_data(file_load):
         for line in infile:
             res.append(json.loads(line))
             loop += 1
-            if loop%1000 == 0:
-                print("got search ", loop)
-
-        print(len(res))
+            if loop % 1000 == 0:
+                print("Got search query:", loop)
+        print("All search Found. len:", len(res))
 
         for doc in res:
             tmpData = []
@@ -77,7 +87,8 @@ def get_data(file_load):
             datas.append(tmpData)
 
             if len(datas) % 1000 == 0:
-                print("data collected", len(datas))
+                print("Data collected:", len(datas))
+        print("All data collected. len:", len(datas))
 
         count_sorted = OrderedDict(sorted(count.items(), key=itemgetter(1), reverse=True))
         count_final = dict()
@@ -103,16 +114,18 @@ def get_data(file_load):
 
             loop += 1
             if loop % 1000 == 0:
-                print("final data collected", loop, "in", len(tmpData))
+                print("Final data collected", loop, "in", len(tmpData))
+        print("Final data collection over. len:", len(datas))
+
         del tmpData
 
-        # print(datas)
-        # print(count_final)
-        print(len(count_final))
+        with open(P2V_QUE_FILE, "w") as qp:
+            qp.write(": a-b-c")
+            qp.write("\n")
 
         loop = 0
         with open(P2V_DATA_FILE, "w") as fp:
-            with open(P2V_QUE_FILE, "w") as qp:
+            with open(P2V_QUE_FILE, "a") as qp:
                 for data in datas:
                     if len(data) > 3:
                         fp.write(" ".join(data))
@@ -123,7 +136,8 @@ def get_data(file_load):
 
                     loop += 1
                     if loop % 1000 == 0:
-                        print("file written", loop, "in", len(datas))
+                        print("File written", loop, "in", len(datas))
+
 
 if __name__ == '__main__':
     get_data(False)

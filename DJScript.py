@@ -13,7 +13,7 @@ cursor = scan(es,
               doc_type="amazon"
               )
 
-with open('data/djdataF.txt', 'w') as f:
+with open('data/asin+dimensions.txt', 'w') as f:
     for i, doc in enumerate(cursor):
         res = dict()
         res['asin'] = doc['_id']

@@ -3,13 +3,23 @@ import numpy as np
 import json
 from sklearn.model_selection import train_test_split
 
-
-DATA_FILE = "data/p2v-embeddings1000000"
+TOP = 1000000
+DATA_FILE = "data/p2v-embeddings" + str(TOP)
 DIMENSION_FILE = "data/asin+dimensions.txt"
-PARSED_DATA = 'data/dataset1000000'
+PARSED_DATA = 'data/dataset' + str(TOP)
 
 dimensions = dict()
 NUM_OF_COLS = 300
+
+
+def init_file_name():
+    global DATA_FILE
+    global DIMENSION_FILE
+    global PARSED_DATA
+
+    DATA_FILE = "data/p2v-embeddings" + str(TOP)
+    DIMENSION_FILE = "data/asin+dimensions.txt"
+    PARSED_DATA = 'data/dataset' + str(TOP)
 
 
 def get_data(cat1, cat2, cat3, cat4):
@@ -51,10 +61,11 @@ def get_data(cat1, cat2, cat3, cat4):
 
                 datas.append(row)
 
-        return datas
+    return datas
 
 
 def get_splitted_data_for_model(load_data):
+    init_file_name()
     if load_data:
         datas = np.asarray(np.float_(parse_data()))
         np.save(PARSED_DATA, datas)
@@ -68,6 +79,7 @@ def get_splitted_data_for_model(load_data):
 
 
 def get_data_for_model(load_data):
+    init_file_name()
     if load_data:
         datas = np.asarray(np.float_(parse_data()))
         np.save(PARSED_DATA, datas)
