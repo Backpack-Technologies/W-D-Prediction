@@ -4,14 +4,15 @@ import DimensionPredictKeras
 
 TOP = 1000000
 
-P2V_DATA_AVAILABLE = False
+P2V_DATA_AVAILABLE = True
 SEARCH_QUERY_FILE_LOAD = False
 
-P2V_EMBEDDINGS_AVAILABLE = False
+P2V_EMBEDDINGS_AVAILABLE = True
 P2V_EMBEDDING_SIZE = 300
 P2V_EPOCH = 16
 
 NN_EPOCH = 100
+NN_DATASET_LOAD = False
 
 
 def main():
@@ -32,6 +33,7 @@ def main():
     DimensionPredictKeras.EPCHOES = NN_EPOCH
     DimensionPredictKeras.NUM_OF_COLS = P2V_EMBEDDING_SIZE
     DimensionPredictKeras.INTERACTIVE_SHELL = True
+    DimensionPredictKeras.LOAD_DATA_FROM_FILE = NN_DATASET_LOAD
     DimensionPredictKeras.main(TOP)
 
 

@@ -27,7 +27,7 @@ def create_neural_model():
     activation_function = keras.layers.PReLU();
 
     # Input Layer
-    model.add(keras.layers.Dense(405, kernel_initializer='normal', input_dim=NUM_OF_COLS,
+    model.add(keras.layers.Dense(405, kernel_initializer=keras.initializers.random_uniform, input_dim=NUM_OF_COLS,
                                  kernel_regularizer=keras.regularizers.l2(0.01),
                                  bias_regularizer=keras.regularizers.l2(0.01), name="input"))
     model.add(activation_function)
@@ -42,7 +42,7 @@ def create_neural_model():
     model.add(keras.layers.Dropout(0.2))
 
     # Output Layer
-    model.add(keras.layers.Dense(4, kernel_initializer='normal', name="output"))
+    model.add(keras.layers.Dense(4, kernel_initializer='normal', name="output", activation="relu"))
 
     model.compile(loss='mean_absolute_error', optimizer="Adam", metrics=['mean_absolute_error'])
     return model
